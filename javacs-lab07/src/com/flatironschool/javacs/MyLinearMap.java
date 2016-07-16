@@ -62,10 +62,16 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 	 * 
 	 * @param target
 	 */
-	private Entry findEntry(Object target) {
-        // TODO: fill this in
-		return null;
-	}
+	private Entry findEntry(Object target)
+    {
+        for (Entry entry: entries) {
+            if (equals(target, entry.key)) {
+                return entry;
+            }
+        }
+        return null;
+        
+    }
 
 	/**
 	 * Compares two keys or two values, handling null correctly.
@@ -98,8 +104,11 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V get(Object key) {
-        // TODO: fill this in.
-		return null;
+        Entry entry = findEntry(key);
+        if (equals(entry, null) == false) {
+            return entry.value;
+        }
+        return null;
 	}
 
 	@Override
@@ -117,8 +126,16 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 	}
 
 	@Override
-	public V put(K key, V value) {
-        // TODO: fill this in.
+	public V put(K key, V value)
+    {
+        Entry entry = findEntry(key);
+        if (equals(entry, null) == false) {
+            V values = entry.value;
+            entry.value = value;
+            return values;
+        }
+        Entry entry1 = new Entry(key, value);
+        entries.add(entry1);
         return null;
 	}
 
@@ -131,9 +148,13 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V remove(Object key) {
-        // TODO: fill this in.
-        return null;
-	}
+        Entry entry = findEntry(key);
+        if (equals(entry, null) == false) {
+            V values = entry.value;
+            entries.remove(entry);
+            return values;
+        }
+        return null;	}
 
 	@Override
 	public int size() {
